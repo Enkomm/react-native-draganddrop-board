@@ -60,7 +60,7 @@ class Item {
       if (this.isLocked()) {
         this.setVisible(false)
       }
-      if (previousItem && previousItem.layout().y > layout.y) {
+      if (previousItem && previousItem?.layout()?.y > layout.y) { //dung edit
         this.setVisible(false)
       }
     })

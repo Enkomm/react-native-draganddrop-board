@@ -229,7 +229,7 @@ class Board extends React.Component {
         })
         this.rotate(MAX_DEG)
       }
-    }, 200)
+    }, 300) //dung edit
   }
 
   onPress = (columnId, item) => {
