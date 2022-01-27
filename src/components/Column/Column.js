@@ -38,7 +38,7 @@ class Column extends React.Component {
   }
 
   componentDidMount() {
-    const { column, boardRepository, onRefresh, onLoadMore } = this.props
+    const { column, boardRepository } = this.props
 
     boardRepository.addListener(column.id(), 'reload', () => this.forceUpdate())
   }
@@ -192,11 +192,10 @@ class Column extends React.Component {
       oneColumn,
       movingMode,
       boardRepository,
-      borderColor,// dung add
-      borderWidth,// dung add
     } = this.props
 
-    const colElements = boardRepository.items(column.id()).length - 1
+    // const colElements = boardRepository.items(column.id()).length - 1 //dung edit
+    const colElements = boardRepository.column(column.id()).data().total //dung add
 
     const ColumnComponent = (
         <ColumnWrapper
@@ -208,18 +207,8 @@ class Column extends React.Component {
             columnHeight={columnHeight}
             width={oneColumn ? ONE_COLUMN_WIDTH : COLUMN_WIDTH}
             marginRight={oneColumn ? 0 : 8}
-            // borderColor={borderColor} // dung add
-            // borderWidth={borderWidth} // dung add
         >
           <RowContainerTitle>
-            {/*<Paragraph*/}
-            {/*    fontSize={columnNameFontSize}*/}
-            {/*    fontFamily={columnNameFontFamily}*/}
-            {/*    color={columnNameTextColor}*/}
-            {/*>*/}
-            {/*  {`${I18n.t(column.data().name)}`}*/}
-            {/*</Paragraph>*/}
-            {/*dung edit text*/}
             <Text style={{
               fontSize: columnNameFontSize,
               color: columnNameTextColor,
@@ -231,10 +220,6 @@ class Column extends React.Component {
             {isWithCountBadge && <SumWrapper>
               <ParagraphWrapper
                   backgroundColor={badgeBackgroundColor}
-                  // dung edit text
-                  // width={badgeWidth}
-                  // height={badgeHeight}
-                  // borderRadius={badgeBorderRadius}
               >
                 <Text style={{
                   fontSize: columnNameFontSize,
@@ -244,15 +229,6 @@ class Column extends React.Component {
                 >
                   {`(${colElements.toString()})`}
                 </Text>
-                {/*dung edit text*/}
-                {/*<Paragraph*/}
-                {/*    fontSize={badgeTextFontSize}*/}
-                {/*    fontFamily={badgeTextFontFamily}*/}
-                {/*    color={badgeTextColor}*/}
-                {/*    lineHeight={ios ? null : badgeTextFontSize * 1.6}*/}
-                {/*>*/}
-                {/*  {`(${colElements.toString()})`}*/}
-                {/*</Paragraph>*/}
               </ParagraphWrapper>
             </SumWrapper>
             }
@@ -283,7 +259,6 @@ class Column extends React.Component {
                       <RefreshControl
                           refreshing={this.state.refreshing}
                           onRefresh={this.handleRefresh}
-                          // tintColor={themes[theme].auxiliaryText}
                       />
                   )}
                   onEndReachedThreshold={0.5}
@@ -312,8 +287,6 @@ Column.defaultProps = {
   columnNameFontSize: 16,
   isWithCountBadge: true,
   oneColumn: false,
-  borderColor: colors.tintColor, // dung add
-  borderWidth: 0.3 // dung add,
 }
 
 Column.propTypes = {
@@ -342,8 +315,6 @@ Column.propTypes = {
   renderWrapperRow: func.isRequired,
   boardRepository: object,
   unsubscribeFromMovingMode: func.isRequired,
-  borderColor: string.isRequired,
-  borderWidth: number.isRequired,
 }
 
 export default Column
